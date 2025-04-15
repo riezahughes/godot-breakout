@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://drh7h7rb8g3xi"]
+
+[ext_resource type="Script" uid="uid://cfhdej4kxa7le" path="res://MainScenes/main_game.gd" id="1_aj3je"]
+[ext_resource type="PackedScene" uid="uid://mx3r7eiuiym3" path="res://Classes/player.tscn" id="1_u2kmd"]
+[ext_resource type="PackedScene" uid="uid://e1rm6p4f1wo4" path="res://Classes/ball.tscn" id="2_aj3je"]
+
+[node name="MainGame" type="Node"]
+script = ExtResource("1_aj3je")
+
+[node name="MainPlayer" parent="." instance=ExtResource("1_u2kmd")]
+speed = 1000
+bat_size = 75
+
+[node name="MainBall" parent="." instance=ExtResource("2_aj3je")]
+
+[node name="BatStartPosition" type="Marker2D" parent="."]
+position = Vector2(600, 760)
+
+[node name="BallStartPosition" type="Marker2D" parent="."]
+position = Vector2(601, 457)
+
+[connection signal="out_of_bounds" from="MainBall" to="." method="_on_main_ball_out_of_bounds"]

@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://mx3r7eiuiym3"]
+
+[ext_resource type="Script" uid="uid://cwjh07mgn5k51" path="res://Classes/player.gd" id="1_hmhw6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hmhw6"]
+size = Vector2(162.963, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0n5y7"]
+
+[node name="Player" type="Area2D"]
+scale = Vector2(1.08, 1)
+script = ExtResource("1_hmhw6")
+speed = 600
+bat_size = 150
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(81.5, 4)
+shape = SubResource("RectangleShape2D_hmhw6")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 163.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_0n5y7")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://e1rm6p4f1wo4"]
+
+[ext_resource type="Script" uid="uid://4iiwtad37q2" path="res://Classes/ball.gd" id="1_2bpip"]
+[ext_resource type="Texture2D" uid="uid://32ckuiauu3cx" path="res://Jiraphics/ball.png" id="1_57xvo"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2bpip"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_57xvo")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 5.0
+}]
+
+[node name="BallNode" type="Node2D"]
+scale = Vector2(0.997433, 1)
+script = ExtResource("1_2bpip")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_2bpip")
+animation = &"moving"
