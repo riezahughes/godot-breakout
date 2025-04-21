@@ -33,8 +33,3 @@ func _process(delta):
 	
 	$ColorRect.size.x = bat_size
 	$CollisionShape2D.position.x = bat_size / 2
-
-
-func _on_body_entered(body):
-	bat_hit.emit()
-	$CollisionShape2D.set_deferred("disabled", true);

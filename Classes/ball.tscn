@@ -17,11 +17,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="BallNode" type="RigidBody2D"]
+[node name="BallNode" type="Area2D"]
 scale = Vector2(0.997433, 1)
-gravity_scale = 0.0
 script = ExtResource("1_2bpip")
-ball_speed = 1
+ball_speed = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_2bpip")
@@ -29,3 +28,5 @@ shape = SubResource("CircleShape2D_2bpip")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2bpip")
 animation = &"moving"
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

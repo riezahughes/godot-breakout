@@ -6,7 +6,6 @@ var screen_size
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print("READY")
 	screen_size = Vector2(1200, 800)
 	_reset()
 
@@ -22,13 +21,12 @@ func _process(delta):
 
 	# Start the game is the game has been reset. Should only run oncee
 	if $StartTimer.is_stopped() && game_has_been_reset == true:
-		print("Running start game in process")
 		game_has_been_reset = false
 		start_game()
 	
 	
 func _reset():
-	print("Resetting_Game");	
+	print("Resetting the Game...");	
 	print($BallStartPosition.position);
 	$MainPlayer.position = $BatStartPosition.global_position 
 	$MainBall.position = $BallStartPosition.position
@@ -43,7 +41,7 @@ func _reset():
 	game_has_been_reset = true
 	
 func start_game():
-	print("Starting_Game");
+	print("Starting the game...");
 	$MainBall.show()
 	
 	ball_velocity = ball_velocity.rotated(randf_range(0, 90))
@@ -54,28 +52,24 @@ func start_game():
 	
 func stop_ball():
 	ball_velocity.x = 50
-	ball_velocity.y = 20
+	ball_velocity.y = 50
 
 func _on_main_ball_out_of_bounds():
 	print("OUT OF BOUNDS")
-	print($MainBall.position)
 	_reset()
-	
-
 
 func _on_level_boundary_area_entered(area: Area2D) -> void:
+	if(area.name == "MainPlayer"):
+		return
+	var posNormalise = $MainBall.position.normalized()
 	if $MainBall.position.x >= screen_size.x:
-		print("Hit the right")
-		print(ball_velocity)
-		ball_velocity = ball_velocity.rotated(90)
-	elif $MainBall.position.x <= 0:
-		print("Hit the left")
-		print(ball_velocity)
-		ball_velocity = ball_velocity.rotated(-90)
-	elif $MainBall.position.y <= 0:
-		print("Hit the top")
-		print(ball_velocity)
-		ball_velocity = ball_velocity.rotated(90)
+		ball_velocity = ball_velocity.bounce(posNormalise)
 	else:
-		print("NOPE")
-		print($MainBall.position.y)
+		ball_velocity = ball_velocity.reflect(posNormalise)
+
+
+func _on_main_player_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+	if area.name == "LevelBoundary":
+		return
+	var posNormalise = $MainPlayer.position.normalized()
+	ball_velocity = ball_velocity.bounce(posNormalise)
