@@ -13,7 +13,6 @@ script = ExtResource("1_aj3je")
 speed = 1000
 
 [node name="MainBall" parent="." instance=ExtResource("2_aj3je")]
-ball_speed = 5
 
 [node name="BatStartPosition" type="Marker2D" parent="."]
 position = Vector2(600, 760)
@@ -23,18 +22,41 @@ position = Vector2(601, 457)
 
 [node name="LevelBoundary" type="Area2D" parent="."]
 
-[node name="LeftWall" type="CollisionPolygon2D" parent="LevelBoundary"]
-polygon = PackedVector2Array(0, -64, 0, 0, 0, 800, -64, 800, -64, -64)
+[node name="LeftWall" type="StaticBody2D" parent="LevelBoundary"]
+metadata/_edit_group_ = true
 
-[node name="RightWall" type="CollisionPolygon2D" parent="LevelBoundary"]
-position = Vector2(1264, 0)
-polygon = PackedVector2Array(0, -64, 0, 0, 0, 800, -64, 800, -64, -64)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LevelBoundary/LeftWall"]
+polygon = PackedVector2Array(0, 0, -40, 0, -40, 800, 0, 800)
 
-[node name="TopWall" type="CollisionPolygon2D" parent="LevelBoundary"]
-position = Vector2(42, -64)
-rotation = -1.5708
-scale = Vector2(0.99999, 1.52234)
-polygon = PackedVector2Array(0, -64, 0, 0, 0, 800, -64, 800, -64, -64)
+[node name="ColorRect" type="ColorRect" parent="LevelBoundary/LeftWall"]
+offset_left = -40.0
+offset_bottom = 800.0
+color = Color(0, 0, 0, 1)
+
+[node name="RightWall" type="StaticBody2D" parent="LevelBoundary"]
+position = Vector2(1240, 0)
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LevelBoundary/RightWall"]
+polygon = PackedVector2Array(0, 0, -40, 0, -40, 800, 0, 800)
+
+[node name="ColorRect" type="ColorRect" parent="LevelBoundary/RightWall"]
+offset_left = -40.0
+offset_bottom = 800.0
+color = Color(0, 0, 0, 1)
+
+[node name="TopWall" type="StaticBody2D" parent="LevelBoundary"]
+position = Vector2(-40, -40)
+rotation = -1.57079
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LevelBoundary/TopWall"]
+polygon = PackedVector2Array(0, 0, -40, 0, -39.9972, 1240, 0.00275421, 1240)
+
+[node name="ColorRect" type="ColorRect" parent="LevelBoundary/TopWall"]
+offset_left = -40.0
+offset_bottom = 1239.0
+color = Color(0, 0, 0, 1)
 
 [node name="HUD" parent="." instance=ExtResource("4_ldcld")]
 
@@ -48,18 +70,13 @@ one_shot = true
 position = Vector2(536, 296)
 
 [node name="TargetBlock2" parent="CurrentBlocks" instance=ExtResource("5_2btox")]
-position = Vector2(240, 392)
+position = Vector2(256, 392)
 
 [node name="TargetBlock3" parent="CurrentBlocks" instance=ExtResource("5_2btox")]
-position = Vector2(928, 80)
+position = Vector2(512, 488)
 
 [node name="TargetBlock4" parent="CurrentBlocks" instance=ExtResource("5_2btox")]
-position = Vector2(640, 608)
+position = Vector2(920, 184)
 
-[connection signal="area_shape_entered" from="MainPlayer" to="." method="_on_main_player_area_shape_entered"]
 [connection signal="out_of_bounds" from="MainBall" to="." method="_on_main_ball_out_of_bounds"]
 [connection signal="area_entered" from="LevelBoundary" to="." method="_on_level_boundary_area_entered"]
-[connection signal="area_shape_entered" from="CurrentBlocks/TargetBlock" to="." method="_on_target_block_area_shape_entered"]
-[connection signal="area_shape_entered" from="CurrentBlocks/TargetBlock2" to="." method="_on_target_block_area_shape_entered"]
-[connection signal="area_shape_entered" from="CurrentBlocks/TargetBlock3" to="." method="_on_target_block_area_shape_entered"]
-[connection signal="area_shape_entered" from="CurrentBlocks/TargetBlock4" to="." method="_on_target_block_area_shape_entered"]
